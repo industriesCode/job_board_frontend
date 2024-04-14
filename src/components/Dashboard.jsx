@@ -14,22 +14,11 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import FeedIcon from '@mui/icons-material/Feed';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
-
-
-const Dashboard = () => {
-    return (
-        <Container>
-            <Typography variant="h3" gutterBottom>
-                Dashboard
-            </Typography>
-            <Typography variant="body1">
-                Welcome to the Dashboard.
-            </Typography>
-        </Container>
-    );
-};
+import Jobs from "./Jobs";
+import JobPost from "./JobPost";
+import YourPosts from "./YourPosts";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
     return (
@@ -38,6 +27,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <ListItem button component={Link} to="/">
                     <DashboardIcon />
                     <ListItemText primary="Dashboard" />
+                </ListItem>
+                <ListItem button component={Link} to="/">
+                    <FeedIcon />
+                    <ListItemText primary="Your Post" />
                 </ListItem>
             </List>
         </Drawer>
@@ -87,7 +80,7 @@ const Layout = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                        My App
+                        Job Board
                     </Typography>
                     <IconButton
                         color="inherit"
@@ -110,7 +103,11 @@ const Layout = () => {
                     </Menu>
                 </Toolbar>
             </AppBar>
-            <h3>Hi, welcome to the Dashboard</h3>
+            <div className="">
+                <JobPost/>
+                {/*<YourPosts onClick={}/>*/}
+                <Jobs/>
+            </div>
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         </>
     );

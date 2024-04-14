@@ -16,14 +16,15 @@ const Login = () => {
         e.preventDefault();
         const response = await dispatch(signin(username, password));
 
+
         if (response && response.token) {
+            const userData = {
+                'username': response.username,
+                'pk': response.user_pk
+            }
             localStorage.setItem('token', response.token);
-            dispatch(
-                login({
-                    username: username,
-                    loggedIn: true
-                })
-            );
+            localStorage.setItem('userData', userData);
+
             navigate('/')
         }
     };
