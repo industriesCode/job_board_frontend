@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import { TextField, Button, Grid, Container } from '@mui/material';
 import {createJobPost, jobList} from "../actions";
 import {useDispatch} from "react-redux";
+import { useForm } from 'react-hook-form'
 
 const JobForm = () => {
     const dispatch = useDispatch();
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString)
+
     const [formData, setFormData] = useState({
         company: '',
         title: '',
         description: '',
         location: '',
         experience: '',
+        created_by:userData.pk
     });
 
     const handleChange = (event) => {
@@ -18,11 +23,13 @@ const JobForm = () => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const { reset } = useForm();
     const handleSubmit = async (event) => {
         event.preventDefault();
         const response = await dispatch(createJobPost(formData));
-        console.log(response)
+        reset()
     };
+
 
     return (
         <Container maxWidth="md" sx={{ marginTop: '20px', marginBottom: '20px' }}>

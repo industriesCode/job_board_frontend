@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// Retrieve token from local storage
+const token = localStorage.getItem('token');
+
 export const signin = (username, password) => async (dispatch) => {
     try {
         const response = await axios.post('http://localhost:8000/api/login/', { username, password });
@@ -20,12 +23,33 @@ export const signup = (username, password) => async (dispatch) => {
 
 export const jobList = () => async (dispatch) => {
     try {
-        const response = await axios.get('http://localhost:8000/api/jobs/');
+        const response = await axios.get('http://localhost:8000/api/jobs/all/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        });
         return response.data
     } catch (error) {
         console.error('Retrieve failed:', error.response.data);
     }
 };
+
+
+export const userJobList = () => async (dispatch) => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/jobs/user/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        });
+        return response.data
+    } catch (error) {
+        console.error('Retrieve failed:', error.response.data);
+    }
+};
+
 
 
 export const createJobPost = (data) => async (dispatch) => {

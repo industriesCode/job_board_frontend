@@ -8,6 +8,8 @@ import {Button, Container, List, ListItem, ListItemText, Typography} from '@mui/
 const Jobs = () => {
     const dispatch = useDispatch();
     const [jobs, setJobs] = useState([]);
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString)
 
     const getJobList = async () => {
         const response = await dispatch(jobList());
@@ -35,7 +37,11 @@ const Jobs = () => {
                                 <Typography variant="body2" color="textSecondary">Experience: {item.experience} years</Typography>
                             </React.Fragment>
                         }/>
-                        <Button variant="contained" onClick={() => handleApply(item.id)}>Apply</Button>
+                        {
+                            userData.pk !== item.created_by ?
+                            <Button variant="contained" onClick={() => handleApply(item.id)}>Apply</Button> :
+                                <></>
+                        }
                     </ListItem>
                 ))}
             </List>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Routes, Route, Link, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {
     Drawer,
     List,
@@ -20,26 +20,12 @@ import Jobs from "./Jobs";
 import JobPost from "./JobPost";
 import YourPosts from "./YourPosts";
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
-    return (
-        <Drawer anchor="left" open={isOpen} onClose={toggleSidebar}>
-            <List>
-                <ListItem button component={Link} to="/">
-                    <DashboardIcon />
-                    <ListItemText primary="Dashboard" />
-                </ListItem>
-                <ListItem button component={Link} to="/">
-                    <FeedIcon />
-                    <ListItemText primary="Your Post" />
-                </ListItem>
-            </List>
-        </Drawer>
-    );
-};
-
 const Layout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [clickYourPost, setClickYourPost] = useState(false)
+
+    console.log(clickYourPost)
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -48,6 +34,24 @@ const Layout = () => {
             navigate("/login")
         }
     }, [])
+
+    const Sidebar = ({ isOpen, toggleSidebar }) => {
+        return (
+            <Drawer anchor="left" open={isOpen} onClose={toggleSidebar}>
+                <List>
+                    <ListItem button component={Link} to="/" onClick={() => setClickYourPost(false)}>
+                        <DashboardIcon />
+                        <ListItemText primary="Dashboard" />
+                    </ListItem>
+                    <ListItem button component={Link} to="/" onClick={() => setClickYourPost(true)}>
+                        <FeedIcon />
+                        <ListItemText primary="Your Post" />
+                    </ListItem>
+
+                </List>
+            </Drawer>
+        );
+    };
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -63,6 +67,7 @@ const Layout = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('userData');
         handleMenuClose()
         navigate('/login')
     }
@@ -104,9 +109,15 @@ const Layout = () => {
                 </Toolbar>
             </AppBar>
             <div className="">
-                <JobPost/>
-                {/*<YourPosts onClick={}/>*/}
-                <Jobs/>
+                {
+                    clickYourPost ?
+                        <YourPosts/>:
+                    <>
+                        <JobPost/>
+                        <Jobs/>
+                    </>
+
+                }
             </div>
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         </>

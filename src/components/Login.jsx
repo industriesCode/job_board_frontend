@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { signin } from '../actions/index';
-import { login } from "../reducers/index";
+import { login } from "../store/index";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Container, TextField, Button, Typography } from '@mui/material';
@@ -22,8 +22,9 @@ const Login = () => {
                 'username': response.username,
                 'pk': response.user_pk
             }
+
             localStorage.setItem('token', response.token);
-            localStorage.setItem('userData', userData);
+            localStorage.setItem('userData', JSON.stringify(userData));
 
             navigate('/')
         }
