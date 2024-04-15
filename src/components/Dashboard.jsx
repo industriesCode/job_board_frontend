@@ -10,7 +10,7 @@ import {
     Typography,
     IconButton,
     Container,
-    MenuItem, Menu
+    MenuItem, Menu, TextField
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -19,13 +19,16 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import Jobs from "./Jobs";
 import JobPost from "./JobPost";
 import YourPosts from "./YourPosts";
+import Profile from "./Profile";
 
 const Layout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [clickYourPost, setClickYourPost] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [searchValue, setSearchValue] = useState('');
 
-    console.log(clickYourPost)
+    const userData = localStorage.getItem('userData');
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -34,6 +37,7 @@ const Layout = () => {
             navigate("/login")
         }
     }, [])
+
 
     const Sidebar = ({ isOpen, toggleSidebar }) => {
         return (
@@ -62,6 +66,7 @@ const Layout = () => {
     };
 
     const handleMenuClose = () => {
+        setIsModalOpen(true);
         setAnchorEl(null);
     };
 
@@ -71,6 +76,16 @@ const Layout = () => {
         handleMenuClose()
         navigate('/login')
     }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+
+    const handleSearchChange = (event) => {
+        setSearchValue(event.target.value);
+        // Implement your search logic here
+    };
 
     return (
         <>
@@ -108,7 +123,7 @@ const Layout = () => {
                     </Menu>
                 </Toolbar>
             </AppBar>
-            <div className="">
+            <Container maxWidth="md" sx={{ marginTop: '20px', marginBottom: '20px' }}>
                 {
                     clickYourPost ?
                         <YourPosts/>:
@@ -118,8 +133,9 @@ const Layout = () => {
                     </>
 
                 }
-            </div>
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+                <Profile userProfile={userData} isOpen={isModalOpen} onClose={handleCloseModal}/>
+            </Container>
+            <Sidebar isOpen={isSidebarOpen}  toggleSidebar={toggleSidebar} />
         </>
     );
 };

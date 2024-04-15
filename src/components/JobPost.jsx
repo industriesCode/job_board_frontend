@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Container } from '@mui/material';
-import {createJobPost, jobList} from "../actions";
-import {useDispatch} from "react-redux";
-import { useForm } from 'react-hook-form'
+import { createJobPost } from "../actions";
+import { useDispatch } from "react-redux";
+import { useForm } from 'react-hook-form';
 
 const JobForm = () => {
     const dispatch = useDispatch();
     const userDataString = localStorage.getItem('userData');
-    const userData = JSON.parse(userDataString)
+    const userData = JSON.parse(userDataString);
 
     const [formData, setFormData] = useState({
         company: '',
@@ -15,7 +15,7 @@ const JobForm = () => {
         description: '',
         location: '',
         experience: '',
-        created_by:userData.pk
+        created_by: userData.pk
     });
 
     const handleChange = (event) => {
@@ -27,12 +27,11 @@ const JobForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const response = await dispatch(createJobPost(formData));
-        reset()
+        reset();
     };
 
-
     return (
-        <Container maxWidth="md" sx={{ marginTop: '20px', marginBottom: '20px' }}>
+        <Container maxWidth="md" sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid #ccc', borderRadius: '5px', padding: '20px' }}>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -90,7 +89,6 @@ const JobForm = () => {
                     </Grid>
                 </Grid>
             </form>
-
         </Container>
     );
 };
