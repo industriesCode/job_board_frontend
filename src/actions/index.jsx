@@ -60,3 +60,19 @@ export const createJobPost = (data) => async (dispatch) => {
         console.error('Job Post failed:', error.response.data);
     }
 };
+
+
+export const applyJob = (jobId) => async (dispatch) => {
+    try {
+        const response = await axios.put(`http://localhost:8000/api/jobs/${jobId}/`, {}, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        });
+        return response.data
+    } catch (error) {
+        console.error('Retrieve failed:', error.response.data);
+    }
+};
+

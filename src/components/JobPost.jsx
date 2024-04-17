@@ -32,6 +32,7 @@ const JobForm = () => {
 
     return (
         <Container maxWidth="md" sx={{ marginTop: '20px', marginBottom: '20px', border: '1px solid #ccc', borderRadius: '5px', padding: '20px' }}>
+            <h4>Post Your Job</h4>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>

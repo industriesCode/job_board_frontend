@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { jobList } from "../actions";
+import {applyJob, jobList} from "../actions";
 import { Button, Container, List, ListItem, ListItemText, Typography, TextField } from '@mui/material';
 
 const Jobs = () => {
@@ -15,8 +15,9 @@ const Jobs = () => {
         setJobs(response);
     };
 
-    const handleApply = (jobId) => {
+    const handleApply = async (jobId) => {
         // Implement your apply logic here
+        await dispatch(applyJob(jobId));
         console.log(`Applying for job with ID: ${jobId}`);
     };
 
@@ -27,7 +28,8 @@ const Jobs = () => {
     const filteredJobs = jobs.filter((item) =>
         item.company.toLowerCase().includes(searchValue.toLowerCase()) ||
         item.title.toLowerCase().includes(searchValue.toLowerCase()) ||
-        item.location.toLowerCase().includes(searchValue.toLowerCase())
+        item.location.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.experience.toLowerCase().includes(searchValue.toLowerCase())
     );
 
 
