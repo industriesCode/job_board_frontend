@@ -5,12 +5,30 @@ import {Link, useNavigate} from "react-router-dom";
 import {Button, Container, TextField, Typography} from "@mui/material";
 
 const Signup = () => {
+    // Renders a sign-up form and handles user registration.
+
+    /*
+        Hooks:
+            useDispatch: Hook from react-redux used to dispatch actions.
+            useNavigate: Hook from react-router-dom used to navigate between routes.
+    */
     const dispatch = useDispatch();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const navigate = useNavigate()
 
+    /*
+        State:
+            username: Stores the value of the username input field.
+            password: Stores the value of the password input field.
+    */
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+
     useEffect(() => {
+        /*
+             Checks if the user is already authenticated by checking the presence of a token in local storage.
+             If authenticated, navigates to the dashboard.
+         */
         let auth = localStorage.getItem('token');
         if (auth) {
             navigate("/")
@@ -19,6 +37,11 @@ const Signup = () => {
 
 
     const handleSignup = async (e) => {
+        /*
+             Handles the form submission event. Dispatches a signup action with the provided username and password.
+             If registration is successful, stores the authentication token in local storage and navigates to the
+             dashboard.
+         */
         e.preventDefault();
         const response = await dispatch(signup(username, password));
         if (response && response.token) {

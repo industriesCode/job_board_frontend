@@ -5,10 +5,13 @@ import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 
 const JobForm = () => {
+    // Renders a form for posting job listings.
+
     const dispatch = useDispatch();
     const userDataString = localStorage.getItem('userData');
     const userData = JSON.parse(userDataString);
 
+    // Stores the data entered into the form fields.
     const [formData, setFormData] = useState({
         company: '',
         title: '',
@@ -19,14 +22,21 @@ const JobForm = () => {
     });
 
     const handleChange = (event) => {
+        //  Updates the formData state when the value of any form field changes.
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
     const { reset } = useForm();
     const handleSubmit = async (event) => {
+        /*
+            Handles the form submission event. Dispatches a createJobPost action with the form data.
+
+            Retrieves user data from local storage to set the created_by field in the form data.
+            Resets the form after submission using reset from react-hook-form.
+        */
         event.preventDefault();
-        const response = await dispatch(createJobPost(formData));
+        await dispatch(createJobPost(formData));
         reset();
     };
 

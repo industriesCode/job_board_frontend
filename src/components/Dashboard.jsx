@@ -22,10 +22,17 @@ import YourPosts from "./YourPosts";
 import Profile from "./Profile";
 
 const Layout = () => {
+    //  Provides the main layout for the application, including the app bar, sidebar, and content area.
+
+    // Stores the state of the sidebar (open/close).
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    // Stores the anchor element for the profile menu.
     const [anchorEl, setAnchorEl] = useState(null);
+    // Stores the state of whether the "Your Post" section is clicked or not.
     const [clickYourPost, setClickYourPost] = useState(false)
+    // Stores the state of the profile modal (open/close).
     const [isModalOpen, setIsModalOpen] = useState(false);
+    //  Stores the value entered the search input field.
     const [searchValue, setSearchValue] = useState('');
 
     const userData = localStorage.getItem('userData');
@@ -58,19 +65,23 @@ const Layout = () => {
     };
 
     const toggleSidebar = () => {
+        // Toggles the state of the sidebar.
         setIsSidebarOpen(!isSidebarOpen);
     };
 
     const handleMenuOpen = (event) => {
+        // Handles opening the profile menu.
         setAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
+        //  Handles closing the profile menu and opening the profile modal.
         setIsModalOpen(true);
         setAnchorEl(null);
     };
 
     const handleLogout = () => {
+        // Handles the logout process by removing tokens and user data from local storage and redirecting to the login page.
         localStorage.removeItem('token')
         localStorage.removeItem('userData');
         handleMenuClose()
@@ -78,13 +89,14 @@ const Layout = () => {
     }
 
     const handleCloseModal = () => {
+        //  Handles closing the profile modal.
         setIsModalOpen(false);
     };
 
 
     const handleSearchChange = (event) => {
+        // Updates the search value when the user types in the search input field.
         setSearchValue(event.target.value);
-        // Implement your search logic here
     };
 
     return (

@@ -2,7 +2,14 @@ import React from 'react';
 import {Modal, Typography, Box, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
+/*
+    Props:
+    isOpen: Boolean indicating whether the modal is open or closed.
+    onClose: Function to close the modal.
+    userProfile: JSON string containing user profile data.
+*/
 const ProfileModal = ({ isOpen, onClose, userProfile }) => {
+    // Renders a modal displaying user profile information.
     const userData = JSON.parse(userProfile);
 
     return (

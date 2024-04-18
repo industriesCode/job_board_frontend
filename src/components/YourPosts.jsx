@@ -4,10 +4,16 @@ import {userJobList} from "../actions";
 import {useDispatch} from "react-redux";
 
 const JobPosts = () => {
+    // Displays the job posts created by the current user along with details such as title, description, location,
+    // experience, and the number of applicants for each post.
+
     const dispatch = useDispatch();
+
+    // Stores the array of job posts created by the current user.
     const [myPosts, setMyPosts] = useState([]);
 
     const getYourPost = async () => {
+        // Fetches the job posts created by the current user from the server and updates the myPosts state.
         const response = await dispatch(userJobList());
         setMyPosts(response);
     };
